@@ -3,18 +3,12 @@ const dialogflow = require('@google-cloud/dialogflow');
 const { send } = require('process');
 const uuid = require('uuid');
 
-/**
- * Send a query to the dialogflow agent, and return the query result.
- * @param {string} projectId The project to be used
- */
 console.log('Texto prueba');
 
-async function runSample(mensaje) {
-  // A unique identifier for the given session
+async function runDialog(mensaje) {
   const sessionId = uuid.v4();
   console.log('Entro a la funcion')
 
-  // Create a new session
 const sessionClient = new dialogflow.SessionsClient({
   keyFilename: "botprueba.json"
 });
@@ -23,7 +17,6 @@ const sessionClient = new dialogflow.SessionsClient({
     sessionId
   );
 
-  // The text query request.
   const request = {
     session: sessionPath,
     queryInput: {
@@ -34,7 +27,6 @@ const sessionClient = new dialogflow.SessionsClient({
     },
   };
 
-  // Send request and log result
   const responses = await sessionClient.detectIntent(request);
   console.log('Detected intent');
   const result = responses[0].queryResult;
@@ -49,4 +41,4 @@ const sessionClient = new dialogflow.SessionsClient({
   }
 }
 
-runSample('credencial');
+runDialog('credencial');
